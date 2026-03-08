@@ -206,3 +206,30 @@ If you want one GAN per tumor class, prepare separate roots like:
 
 Then point each notebook root (`DATASET` / `dataroot`) to the corresponding parent folder.
 
+## 7) Direct `.py` files already generated
+
+Converted files are under `train_py/`:
+
+- `train_py/train_dcgan_from_nb.py`
+- `train_py/train_progan_from_nb.py`
+- `train_py/train_stylegan2_from_nb.py`
+- `train_py/train_wgan_gp_from_nb.py`
+- `train_py/train_vit_from_nb.py`
+
+They were generated from notebooks by:
+
+```powershell
+python tools/convert_notebooks_to_py.py
+```
+
+Run commands:
+
+```powershell
+python train_py/train_dcgan_from_nb.py
+python train_py/train_progan_from_nb.py
+python train_py/train_stylegan2_from_nb.py
+python train_py/train_wgan_gp_from_nb.py
+python train_py/train_vit_from_nb.py
+```
+
+Before running, you still need to replace notebook-era paths (`/content/...`, `MyDrive`, old `C:\Users\...`) in those files.
