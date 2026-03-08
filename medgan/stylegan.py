@@ -295,12 +295,17 @@ def gradient_penalty(critic, real, fake,device="cpu"):
     return gradient_penalty
 
 
-def get_w(batch_size, mapping_net):
-    z = torch.randn(batch_size, W_DIM).to(DEVICE)
+def get_w(batch_size, mapping_net, device=None):
+    # Use the provided device (or mapping network device) to avoid cuda/cpu mismatch.
+    if device is None:
+        device = next(mapping_net.parameters()).device
+    z = torch.randn(batch_size, W_DIM, device=device)
     w = mapping_net(z)
     return w[None, :, :].expand(LOG_RESOLUTION, -1, -1)
 
-def get_noise(batch_size):
+def get_noise(batch_size, device=None):
+        if device is None:
+            device = DEVICE
 
         noise = []
         resolution = 4
@@ -309,8 +314,8 @@ def get_noise(batch_size):
             if i == 0:
                 n1 = None
             else:
-                n1 = torch.randn(batch_size, 1, resolution, resolution, device=DEVICE)
-            n2 = torch.randn(batch_size, 1, resolution, resolution, device=DEVICE)
+                n1 = torch.randn(batch_size, 1, resolution, resolution, device=device)
+            n2 = torch.randn(batch_size, 1, resolution, resolution, device=device)
 
             noise.append((n1, n2))
 
@@ -351,10 +356,16 @@ def generate_example_and_show_SG2(gen, mapping_net, steps=1, n=1):
     gen.eval()  # Set the generator to evaluation mode
     mapping_net.eval()  # Set the mapping network to evaluation mode
 
+    gen_device = next(gen.parameters()).device
+    map_device = next(mapping_net.parameters()).device
+    if map_device != gen_device:
+        mapping_net = mapping_net.to(gen_device)
+        map_device = gen_device
+
     with torch.no_grad():
         # Generate latent vector and noise
-        w = get_w(1, mapping_net).to(DEVICE)  # Generate a single latent vector
-        noise = get_noise(1)  # Generate noise for all resolution levels
+        w = get_w(1, mapping_net, device=map_device)  # Generate a single latent vector
+        noise = get_noise(1, device=gen_device)  # Generate noise for all resolution levels
 
         # Generate the image using the generator
         img = gen(w, noise).to("cpu") * 0.5 + 0.5  # Scale to [0, 1]
@@ -388,12 +399,18 @@ def generate_examples_SG2(generator, mapping_net, num_images):
 
     generator.eval()  # Set generator to evaluation mode
     mapping_net.eval()  # Set mapping network to evaluation mode
+    gen_device = next(generator.parameters()).device
+    map_device = next(mapping_net.parameters()).device
+    # Keep both modules on the same device for inference.
+    if map_device != gen_device:
+        mapping_net = mapping_net.to(gen_device)
+        map_device = gen_device
 
     with torch.no_grad():
         for i in range(num_images):
             # Generate latent vector and noise
-            w = get_w(1, mapping_net).to(generator.device)  # Generate a single latent vector
-            noise = get_noise(1)  # Generate noise for all resolution levels
+            w = get_w(1, mapping_net, device=map_device)  # Generate a single latent vector
+            noise = get_noise(1, device=gen_device)  # Generate noise for all resolution levels
 
             # Generate the image using the generator
             img = generator(w, noise).to("cpu") * 0.5 + 0.5  # Normalize to [0, 1]

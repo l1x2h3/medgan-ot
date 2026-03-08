@@ -22,6 +22,8 @@ FEATURES_GEN = 64
 CHANNELS_IMG = 3
 progan_steps = 6  # Number of steps for ProGAN fade-in
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+# Set MEDGAN_PREVIEW_MODE=1 to launch UI without loading model checkpoints.
+PREVIEW_MODE = os.getenv("MEDGAN_PREVIEW_MODE", "0") == "1"
 
 # Model paths
 model_paths = {
@@ -51,7 +53,7 @@ model_paths = {
     },
     "WGANs": {
         "Glioma": "models/WGAN-Glioma.pth",
-        "Meningioma": "models/WGAN-Pituitary.pth",
+        "Meningioma": "models/WGAN-Meningioma.pth",
         "Pituitary": "models/WGAN-Pituitary.pth",
     }
 }
@@ -61,6 +63,13 @@ model_paths = {
 dcgan_generators = {}
 for label, path in model_paths["DCGAN"].items():
     model = Generator_DCGAN(1, 256, 64, 3).to(torch.device('cpu'))  # Corrected Z_DIM to 256
+    # Preview mode skips weight loading so the web UI can start without local model files.
+    if PREVIEW_MODE:
+        print(f"[Preview Mode] Skipping DCGAN checkpoint load: {path}")
+        continue
+    if not os.path.exists(path):
+        print(f"[Missing] DCGAN checkpoint not found for {label}: {path}")
+        continue
     model.load_state_dict(torch.load(path, map_location=torch.device('cpu')))
     model.eval()
     dcgan_generators[label] = model
@@ -69,6 +78,12 @@ for label, path in model_paths["DCGAN"].items():
 progan_generators = {}
 for label, path in model_paths["ProGAN"].items():
     model = Generator_ProGAN(256, 256, 3).to(torch.device('cpu'))
+    if PREVIEW_MODE:
+        print(f"[Preview Mode] Skipping ProGAN checkpoint load: {path}")
+        continue
+    if not os.path.exists(path):
+        print(f"[Missing] ProGAN checkpoint not found for {label}: {path}")
+        continue
     model.load_state_dict(torch.load(path, map_location=torch.device('cpu')))
     model.eval()
     progan_generators[label] = model
@@ -77,8 +92,15 @@ for label, path in model_paths["ProGAN"].items():
 stylegan2_generators = {}
 stylegan2_mapping_networks = {}
 for label, paths in model_paths["StyleGAN2"].items():
-    gen_model = Generator_SG2(log_resolution=8, W_DIM=256)
-    map_net = MappingNetwork(256, 256).to(DEVICE)
+    # Keep StyleGAN2 inference on CPU to match other generators and avoid mixed-device tensors.
+    gen_model = Generator_SG2(log_resolution=8, W_DIM=256).to(torch.device('cpu'))
+    map_net = MappingNetwork(256, 256).to(torch.device('cpu'))
+    if PREVIEW_MODE:
+        print(f"[Preview Mode] Skipping StyleGAN2 checkpoint load: {paths}")
+        continue
+    if not os.path.exists(paths["generator"]) or not os.path.exists(paths["mapping"]):
+        print(f"[Missing] StyleGAN2 checkpoints not found for {label}: {paths}")
+        continue
     gen_model.load_state_dict(torch.load(paths["generator"], map_location=torch.device('cpu')))
     map_net.load_state_dict(torch.load(paths["mapping"], map_location=torch.device('cpu')))
     gen_model.eval()
@@ -91,6 +113,12 @@ wgan_generators = {}
 for label, path in model_paths["WGANs"].items():
     model = Generator_WGAN().to(torch.device('cpu'))
     try:
+        if PREVIEW_MODE:
+            print(f"[Preview Mode] Skipping WGAN checkpoint load: {path}")
+            continue
+        if not os.path.exists(path):
+            print(f"[Missing] WGAN checkpoint not found for {label}: {path}")
+            continue
         # Load the state dict with weights_only=True
         state_dict = torch.load(path, map_location=torch.device('cpu'))
         model.load_state_dict(state_dict, strict=False)  # Allows partial compatibility
@@ -150,8 +178,17 @@ def generate():
     else:
         return jsonify({"error": "Invalid model type"}), 400
 
+    if not generators:
+        return jsonify({
+            "error": f"No checkpoints loaded for {model_type}. "
+                     f"Disable preview mode or put model files under models/."
+        }), 503
+
     if class_name not in generators:
-        return jsonify({"error": f"Invalid class name for {model_type}"}), 400
+        return jsonify({
+            "error": f"Invalid or unavailable class name for {model_type}: {class_name}",
+            "available_classes": sorted(list(generators.keys()))
+        }), 400
 
     if model_type == "StyleGAN2":
         generator = generators[class_name]

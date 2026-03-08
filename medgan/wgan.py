@@ -3,7 +3,7 @@ import torch
 import base64
 import torch.nn as nn
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvasgit
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 class Generator_WGAN(nn.Module):
     def __init__(self, z_dim=256, img_channels=1, features_g=32):
