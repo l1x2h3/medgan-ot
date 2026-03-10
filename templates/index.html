@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedGAN Studio</title>
+    <link rel="icon" type="image/png" href="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .models {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(120deg, #f8fbff, #eef5fc);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInModels 1.5s ease-in-out;
+        }
+
+        @keyframes fadeInModels {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .models h2 {
+            font-size: 2.8rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .models h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #007BFF, #ffffff);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .models p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .models-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .model-card {
+            background: linear-gradient(135deg,#60a5fa, #1e3a8a);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.61);
+            text-align: center;
+            padding: 30px;
+            width: 280px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .model-card h3 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .model-card p {
+            font-size: 1rem;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.1), transparent 70%);
+            z-index: 0;
+            transform: scale(0);
+            transition: transform 0.4s ease;
+        }
+
+        .model-card:hover::before {
+            transform: scale(1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .model-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png" alt="MedGAN Logo">
+            <span>MedGAN Studio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('generate_info') }}">Generate</a></li>
+                <li><a href="{{ url_for('detect_info') }}">Detect</a></li>
+                <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>AI-Powered Medical Imaging</h1>
+            <p>Transform your research with advanced AI-generated medical images that are fast reliable and cutting-edge technology.</p>
+            <a href="{{ url_for('generate_info') }}" class="btn-primary">Generate Images</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>Why Choose MedGAN Studio?</h2>
+            <p>MedGAN Studio is a platform built for researchers and medical professionals to leverage AI technology for generating brain tumor images.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>High Accuracy</h3>
+                    <p>Our models deliver ultra-realistic images with unparalleled accuracy for your research needs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Fast Processing</h3>
+                    <p>Generate images in seconds with our highly optimized platform.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Custom Solutions</h3>
+                    <p>Scale your image generation from small projects to large datasets effortlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section class="models" id="models">
+        <div class="container">
+            <h2>Our Models</h2>
+            <p>Explore the advanced GAN architectures we utilize to generate medical images with exceptional quality and precision.</p>
+            <div class="models-grid">
+                <div class="model-card">
+                    <h3>Progressive GANs</h3>
+                    <p>Enables high-quality image synthesis by progressively growing the generator and discriminator networks.</p>
+                </div>
+                <div class="model-card">
+                    <h3>DCGANs</h3>
+                    <p>Deep Convolutional GANs leverage convolutional layers for generating realistic medical images efficiently.</p>
+                </div>
+                <div class="model-card">
+                    <h3>StyleGAN2</h3>
+                    <p>State-of-the-art GAN architecture offering unprecedented control over image style and quality.</p>
+                </div>
+                <div class="model-card">
+                    <h3>WGANs</h3>
+                    <p>Wasserstein GANs optimize stability and improve training dynamics for generating sharp and stable images.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <p>&copy; 2024 MedGAN Studio. All Rights Reserved.</p>
+            <div class="footer-links">
+                    <a href="mailto:medgan2025@gmail.com">Email Us</a>
+                    <a href="https://instagram.com/medgan"target="_blank">Instagram</a>
+                    <a href="https://www.linkedin.com/company/medgan/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

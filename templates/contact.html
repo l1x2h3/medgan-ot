@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="icon" type="image/png" href="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #e0f7fa, #f3e5f5);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            margin: 50px auto;
+            max-width: 900px;
+            animation: fadeIn 1.5s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 198, 255, 0.2), transparent 70%);
+            z-index: -1;
+            transform: scale(0);
+            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+        }
+
+        .contact-section:hover::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-section h2 {
+            font-size: 3rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .contact-section h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #007BFF, #86E3CE);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: expand 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expand {
+            from {
+                width: 0;
+            }
+            to {
+                width: 80px;
+            }
+        }
+
+        .contact-section p {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        /* Contact Links */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .contact-links a {
+            display: inline-block;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-links a:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            transform: skewX(-45deg);
+            transition: left 0.5s ease;
+        }
+
+        .contact-links a:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png" alt="MedGAN Logo">
+            <span>MedGAN Studio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('generate_info') }}">Generate</a></li>
+                <li><a href="{{ url_for('detect_info') }}">Detect</a></li>
+                <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact-section">
+        <h2>Contact Us</h2>
+        <p>Reach out to us through the following channels:</p>
+        <div class="contact-links">
+            <a href="mailto:medgan2025@gmail.com">Email Us</a>
+            <a href="https://instagram.com/medgan"target="_blank">Instagram</a>
+            <a href="https://www.linkedin.com/company/medgan/" target="_blank">LinkedIn</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 MedGAN Studio. All Rights Reserved.</p>
+            <p>Created by AI Students at Al- Balqa Applied University (BAU)</p>
+        </div>
+    </footer>
+</body>
+</html>

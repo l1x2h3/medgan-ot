@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Detection</title>
+    <link rel="icon" type="image/png" href="static/css/Blue_Abstract_Brain_Technology_Logo__1_-removebg-preview.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #f0f7ff, #e0f4ff);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .detect-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeInDetect 1.5s ease-in-out;
+        }
+
+        @keyframes fadeInDetect {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detect-section h2 {
+            font-size: 2.5rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-weight: bold;
+            position: relative;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .detect-section h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #007BFF, #86E3CE);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .detect-section p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .detect-section form {
+            text-align: left;
+            background: linear-gradient(135deg, #f9f9fc, #e3e9ff);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .detect-section input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f7f9fc;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .detect-section input[type="file"]:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+            transform: translateY(-3px);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::after {
+            opacity: 1;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #60a5fa);
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer .footer-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .footer .footer-links a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="static/css/Blue_Abstract_Brain_Technology_Logo__1_-removebg-preview.png" alt="MedGAN Logo">
+            <span>MedGAN Studio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('generate_info') }}">Generate</a></li>
+                <li><a href="{{ url_for('detect_info') }}">Detect</a></li>
+                <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+
+            </ul>
+        </nav>
+    </header>
+
+    <section class="detect-section">
+        <h2>Brain Tumor Detection</h2>
+        <p>Upload a brain scan image to predict its tumor type.</p>
+        <form action="/detect" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit" class="btn-primary">Predict</button>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 MedGAN Studio. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="mailto:medgan2025@gmail.com">Email Us</a>
+                <a href="https://instagram.com/medgan" target="_blank">Instagram</a>
+                <a href="https://www.linkedin.com/company/medgan/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

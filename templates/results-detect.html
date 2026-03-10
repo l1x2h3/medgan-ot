@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Results</title>
+    <link rel="icon" type="image/png" href="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .results-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 900px;
+        }
+
+        .results-section h2 {
+            font-size: 2.5rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        .results-section p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .image-card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .image-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png" alt="MedGAN Logo">
+            <span>MedGAN Studio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('generate_info') }}">Generate</a></li>
+                <li><a href="{{ url_for('detect_info') }}">Detect</a></li>
+                <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <h2>Detection Results</h2>
+        <p>Predicted Tumor Type: <strong>{{ result }}</strong></p>
+        <div class="image-container">
+            {% for image in images %}
+                <div class="image-card">
+                    <img src="{{ url_for('static', filename=image) }}" alt="Uploaded Image">
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('detect_info') }}" class="btn-primary">Analyze Another Image</a>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 MedGAN Studio. All Rights Reserved.</p>
+            <div class="footer-links">
+                    <a href="mailto:medgan2025@gmail.com">Email Us</a>
+                    <a href="https://instagram.com/medgan"target="_blank">Instagram</a>
+                    <a href="https://www.linkedin.com/company/medgan/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

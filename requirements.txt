@@ -1,0 +1,12 @@
+torch==2.7.0
+torchvision==0.22.0
+torchaudio==2.7.0
+Flask==3.1.0
+matplotlib==3.10.1
+pylint==3.3.6
+pytest==8.3.5
+black==25.1.0
+nbval==0.11.0
+lpips==0.1.4
+piq==0.8.0
+sewar==0.4.0

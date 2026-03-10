@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Images</title>
+    <link rel="icon" type="image/png" href="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png" alt="MedGAN Logo">
+            <span>MedGAN Studio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('generate_info') }}">Generate</a></li>
+                <li><a href="{{ url_for('detect_info') }}">Detect</a></li>
+                <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Results Section -->
+    <section class="results">
+        <div class="container">
+            <h1>Your AI-Generated Images</h1>
+            <p>View, download individual images, or download all images as a ZIP file below.</p>
+            
+            <!-- Gallery -->
+            <div class="gallery">
+                {% for image in images %}
+                    <div class="image-card">
+                        <img src="data:image/png;base64,{{ image }}" alt="Generated Image">
+                        <a href="data:image/png;base64,{{ image }}" download="Generated_Image.png" class="btn-secondary">Download</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- ZIP Download -->
+            <div class="zip-download">
+                <a href="{{ url_for('download_zip') }}" class="btn-primary">Download All as ZIP</a>
+            </div>
+            
+            <a href="{{ url_for('generate_info') }}" class="btn-primary">Generate More Images</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <p>&copy; 2024 MedGAN Studio. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="mailto:medgan2025@gmail.com">Email Us</a> |
+                <a href="https://instagram.com/medgan" target="_blank">Instagram</a> |
+                <a href="https://www.linkedin.com/company/medgan/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

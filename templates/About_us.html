@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="icon" type="image/png" href="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Additional styling for About Us page */
+        .about {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #f0f7ff, #e0f4ff);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 1200px;
+            animation: fadeInAbout 1.5s ease-in-out;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: #007BFF;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .features-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #a47abe, #006eff);
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            color: white;
+            position: relative;
+        }
+
+        .feature-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 4px solid #ffffff;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .contact-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-link img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .contact-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="static/css/Blue_ABstract_Brain_Technology_Logo__1_-removebg-preview.png" alt="MedGAN Logo">
+            <span>MedGAN Studio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('generate_info') }}">Generate</a></li>
+                <li><a href="{{ url_for('detect_info') }}">Detect</a></li>
+                <li><a href="{{ url_for('about_us') }}">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="about">
+        <div class="container">
+            <h2>About Our Team</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="static/css/hamza.jpeg" alt="Hamza Nasser">
+                    <h3>Hamza Nasser</h3>
+                    <p>Experienced in implementing effective data preprocessing strategies and specializing in optimizing GAN architectures for enhanced application outcomes.</p>
+                    <div class="contact-links">
+                        <a href="mailto:hamzawassem.n@gmail.com" class="contact-link"><img src="static/icons/email-icon.png" alt="Email"></a>
+                        <a href="https://www.linkedin.com/in/hamza-waseem-nasser" target="_blank" class="contact-link"><img src="static/icons/linkedin-icon.png" alt="LinkedIn"></a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <img src="static\css\profile-pic - 2025-01-02T222023.790.png" alt="Mohammed Zaloom">
+                    <h3>Mohammed Zaloom</h3>
+                    <p>
+                        Bachelor’s in AI and Robotics with a strong focus on AI and Deep Learning technologies. Experienced in designing, training, and optimizing deep learning models.</p>
+                    <div class="contact-links">
+                        <a href="mailto:mohammedzaloomai@gmail.com" class="contact-link"><img src="static/icons/email-icon.png" alt="Email"></a>
+                        <a href="https://linkedin.com/in/mozaloom" target="_blank" class="contact-link"><img src="static/icons/linkedin-icon.png" alt="LinkedIn"></a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <img src="static/css/me.jpeg" alt="Mahmoud AbuAwd">
+                    <h3>Mahmoud AbuAwd</h3>
+                    <p>Highly skilled in data preprocessing techniques and optimization, with a strong expertise in tuning, and implementing advanced GAN architectures for applications.</p>
+                    <div class="contact-links">
+                        <a href="mailto:@gmail.com" class="contact-link"><img src="static/icons/email-icon.png" alt="Email"></a>
+                        <a href="https://linkedin.com/in/mahmoudabuawd" target="_blank" class="contact-link"><img src="static/icons/linkedin-icon.png" alt="LinkedIn"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 MedGAN Studio. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="mailto:medgan2025@gmail.com">Email Us</a>
+                <a href="https://instagram.com/medgan" target="_blank">Instagram</a>
+                <a href="https://www.linkedin.com/company/medgan/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

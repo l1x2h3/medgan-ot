@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .error-container {
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        .btn-home {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="error-container">
+                    <h2 class="text-danger">Error Occurred</h2>
+                    <p>{{ error }}</p>
+                    <p>Please try again or contact support if the issue persists.</p>
+                    <a href="/" class="btn btn-primary btn-home">Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
